@@ -1,6 +1,8 @@
 ﻿using Android.App;
+using Android.Content;
 using Android.Content.PM;
 using Android.OS;
+using Plugin.NFC;
 using Prism;
 using Prism.Ioc;
 
@@ -17,6 +19,9 @@ namespace XamarinFormsNFC.Droid
 
             base.OnCreate(savedInstanceState);
 
+            // Plugin NFC: Initialization
+            CrossNFC.Init(this);
+
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             LoadApplication(new App(new AndroidInitializer()));
         }
@@ -26,6 +31,22 @@ namespace XamarinFormsNFC.Droid
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+
+        protected override void OnResume()
+        {
+            base.OnResume();
+
+            // Plugin NFC: Restart NFC listening on resume (needed for Android 10+) 
+            CrossNFC.OnResume();
+        }
+
+        protected override void OnNewIntent(Intent intent)
+        {
+            base.OnNewIntent(intent);
+
+            // Plugin NFC: Tag Discovery Interception
+            CrossNFC.OnNewIntent(intent);
         }
     }
 
