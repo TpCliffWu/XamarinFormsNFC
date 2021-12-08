@@ -5,6 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="NFCFunction\**" />
+    <EmbeddedResource Remove="NFCFunction\**" />
+    <None Remove="NFCFunction\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Plugin.NFC" Version="0.1.20" />
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2244" />
     <PackageReference Include="Xamarin.Essentials.Interfaces" Version="1.7.0" />

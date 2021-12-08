@@ -1,4 +1,5 @@
-﻿using Prism.Commands;
+﻿using Prism.AppModel;
+using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation;
 using Prism.Services;
@@ -10,7 +11,7 @@ using Unity;
 
 namespace XamarinFormsNFC.ViewModels
 {
-    public class ViewModelBase : BindableBase, IInitialize, INavigationAware, IDestructible
+    public class ViewModelBase : BindableBase, IInitialize, INavigationAware, IDestructible, IApplicationLifecycleAware
     {
         protected INavigationService NavigationService { get; private set; }
 
@@ -53,6 +54,16 @@ namespace XamarinFormsNFC.ViewModels
         public virtual void Destroy()
         {
 
+        }
+
+        public virtual void OnResume()
+        {
+            //Restore the state of your ViewModel.
+        }
+
+        public virtual void OnSleep()
+        {
+            //Save the state of your ViewModel.
         }
     }
 }
