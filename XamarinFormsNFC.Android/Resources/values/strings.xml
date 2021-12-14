@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<string name="app_name">XamarinFormsNFC.Droid</string>
+	<string name="aiddescription">XamarinFormsNFC.Droid</string>
+	<string name="servicedesc">XamarinFormsNFC.Droid</string>
 </resources>
