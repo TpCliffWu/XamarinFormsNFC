@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Xamarin.Essentials;
 using XamarinFormsNFC.Droid.NFC;
 
 namespace XamarinFormsNFC.Droid
@@ -24,8 +25,53 @@ namespace XamarinFormsNFC.Droid
     public class MyHostApduService : HostApduService
     {
 
+        public override void OnCreate()
+        {
+            base.OnCreate();
+
+            string text = Preferences.Get("nfc_text", "NO DATA");
+
+            var NDEF_ID = new byte[] { 0xE1, 0x04 };
+            var textBtye = Encoding.UTF8.GetBytes(text); // 文字byte
+
+            var lang = "en";
+            var byteLang = Encoding.ASCII.GetBytes(lang);
+
+            var byteLangSizeString = byteLang.Length.ToString("X2");    // 語系byte長度
+
+            var sizeLangBtye = byteLangSizeString.StringToByteArray(); // 語系byte
+
+            var _payload1 = sizeLangBtye.Concat(byteLang); // 語系長度 + 語系
+            var _payload = _payload1.Concat(textBtye).ToArray(); // 語系長度 + 語系 + 傳輸文字
+
+            // 建立android nfc 物件
+            var ndefRecord = new NdefRecord(tnf: NdefRecord.TnfWellKnown,
+                                    type: NdefRecord.RtdText.ToArray(),
+                                    id: NDEF_ID,
+                                    payload: _payload);
+
+            var ndefMsg = new NdefMessage(ndefRecord);
+
+            this.NDEF_URI_BYTES = ndefMsg.ToByteArray();
+
+            Log.Info(TAG, $"NDEF_URI_BYTES: {BitConverter.ToString(NDEF_URI_BYTES)}");
+
+
+            var startByte = new byte[] { 0x00 };
+            var hexSizeString = NDEF_URI_BYTES.Length.ToString("X2"); // 傳輸物件長度
+            var sizeBtye = hexSizeString.StringToByteArray();
+            this.NDEF_URI_LEN = startByte.Concat(sizeBtye).ToArray();
+
+            Log.Info(TAG, $"NDEF_URI_LEN: {BitConverter.ToString(NDEF_URI_LEN)}");
+        }
+
+        private byte[] NDEF_URI_LEN { get; set; }
+
+        private byte[] NDEF_URI_BYTES { get; set; }
+
+
         private const String TAG = "MyHostApduService";
-       
+
         public override void OnDeactivated([GeneratedEnum] DeactivationReason reason)
         {
 
@@ -46,40 +92,7 @@ namespace XamarinFormsNFC.Droid
             }
 
 
-            string text = "654321"; // 傳輸文字
 
-            var NDEF_ID = new byte[] { 0xE1, 0x04 };
-            var textBtye = Encoding.UTF8.GetBytes(text); // 文字byte
-
-            var lang = "en";
-            var byteLang = Encoding.ASCII.GetBytes(lang);
-
-            var byteLangSizeString = byteLang.Length.ToString("X2");    // 語系byte長度
- 
-            var sizeLangBtye = byteLangSizeString.StringToByteArray(); // 語系byte
-
-            var _payload1 = sizeLangBtye.Concat(byteLang); // 語系長度 + 語系
-            var _payload = _payload1.Concat(textBtye).ToArray(); // 語系長度 + 語系 + 傳輸文字
-
-            // 建立android nfc 物件
-            var ndefRecord = new NdefRecord(tnf: NdefRecord.TnfWellKnown,
-                                    type: NdefRecord.RtdText.ToArray(),
-                                    id: NDEF_ID,
-                                    payload: _payload);
-
-            var ndefMsg = new NdefMessage(ndefRecord);
-
-            var NDEF_URI_BYTES = ndefMsg.ToByteArray();
-
-            Log.Info(TAG, $"NDEF_URI_BYTES: {BitConverter.ToString(NDEF_URI_BYTES)}");
-
-
-            var startByte = new byte[] { 0x00 };
-            var hexSizeString = NDEF_URI_BYTES.Length.ToString("X2"); // 傳輸物件長度
-            var sizeBtye = hexSizeString.StringToByteArray();
-            var NDEF_URI_LEN = startByte.Concat(sizeBtye).ToArray();
-
-            Log.Info(TAG, $"NDEF_URI_LEN: {BitConverter.ToString(NDEF_URI_LEN)}");
 
             /// <summary>
             /// CLA - (1) -  Class of instruction

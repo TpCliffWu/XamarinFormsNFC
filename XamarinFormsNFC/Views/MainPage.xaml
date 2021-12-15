@@ -5,11 +5,24 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     Title="{Binding Title}">
 
-    <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
-        <Label Text="Welcome to Xamarin Forms and Prism!" />
+    <StackLayout
+        Margin="30,0"
+        HorizontalOptions="FillAndExpand"
+        VerticalOptions="CenterAndExpand">
+        <Editor
+            HeightRequest="200"
+            HorizontalOptions="FillAndExpand"
+            Text="{Binding NfcContent}" />
         <Button Command="{Binding ReadCommand}" Text="Read Tag" />
-        <Editor HeightRequest="200" Text="{Binding NfcContent}" />
         <Button Command="{Binding WritingCommand}" Text="Writing Tag" />
+        <Button Command="{Binding SetCommand}" Text="Set Emulator Card Content">
+            <Button.IsVisible>
+                <OnPlatform
+                    x:TypeArguments="x:Boolean"
+                    Android="true"
+                    iOS="false" />
+            </Button.IsVisible>
+        </Button>
     </StackLayout>
 
 </ContentPage>

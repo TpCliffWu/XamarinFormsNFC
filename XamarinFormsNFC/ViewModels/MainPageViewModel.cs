@@ -19,6 +19,7 @@ namespace XamarinFormsNFC.ViewModels
         public DelegateCommand ReadCommand { get; set; }
         public DelegateCommand WritingCommand { get; set; }
         public DelegateCommand StopCommand { get; set; }
+        public DelegateCommand SetCommand { get; set; }
 
 
         private bool _nfcIsEnabled;
@@ -65,7 +66,12 @@ namespace XamarinFormsNFC.ViewModels
             ReadCommand = new DelegateCommand(ReadNfcTag);
             WritingCommand = new DelegateCommand(WritingNfc);
             StopCommand = new DelegateCommand(Stop);
+            SetCommand = new DelegateCommand(Set);
+        }
 
+        private void Set()
+        {
+            Preferences.Set("nfc_text", NfcContent);
         }
 
         public void OnAppearing()
@@ -129,7 +135,8 @@ namespace XamarinFormsNFC.ViewModels
             }
             catch (System.Exception ex)
             {
-                await ShowAlert(ex.Message);
+                //await ShowAlert(ex.Message);
+                Console.WriteLine($"{ex.Message}");
             }
         }
 
@@ -183,6 +190,7 @@ namespace XamarinFormsNFC.ViewModels
             }
         }
 
+        // 檢查權限
         public async Task<bool> CheckPermission()
         {
             if (CrossNFC.IsSupported)
@@ -258,16 +266,20 @@ namespace XamarinFormsNFC.ViewModels
 
             if (!tagInfo.IsSupported)
             {
-                await ShowAlert("Unsupported tag", title);
+                //   await ShowAlert("Unsupported tag", title);
+                Console.WriteLine($"Unsupported tag");
             }
             else if (tagInfo.IsEmpty)
             {
-                await ShowAlert("Empty tag", title);
+             //   await ShowAlert("Empty tag", title);
+                Console.WriteLine($"Empty tag");
             }
             else
             {
                 var first = tagInfo.Records[0];
-                await ShowAlert(GetMessage(first), title);
+             //   await ShowAlert(GetMessage(first), title);
+    
+                this.NfcContent = first.Message;
             }
         }
 
