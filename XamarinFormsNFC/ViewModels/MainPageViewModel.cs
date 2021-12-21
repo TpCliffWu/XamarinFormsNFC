@@ -167,7 +167,8 @@ namespace XamarinFormsNFC.ViewModels
             }
             catch (Exception ex)
             {
-                await ShowAlert(ex.Message);
+                //await ShowAlert(ex.Message);
+                Console.WriteLine($"{ex.Message}");
             }
         }
 
@@ -186,7 +187,9 @@ namespace XamarinFormsNFC.ViewModels
             }
             catch (Exception ex)
             {
-                await ShowAlert(ex.Message);
+                //await ShowAlert(ex.Message);
+                Console.WriteLine($"{ex.Message}");
+
             }
         }
 
@@ -289,9 +292,17 @@ namespace XamarinFormsNFC.ViewModels
             {
                 CrossNFC.Current.StopPublishing();
                 if (tagInfo.IsEmpty)
-                    await ShowAlert("Formatting tag successfully");
+                {
+                    //await ShowAlert("Formatting tag successfully");
+                    Console.WriteLine($"Formatting tag successfully");
+                }
+
                 else
-                    await ShowAlert("Writing tag successfully");
+                {
+                    //await ShowAlert("Writing tag successfully");
+                    Console.WriteLine($"Writing tag successfully");
+                }
+                   
             }
             catch (System.Exception ex)
             {
@@ -356,7 +367,8 @@ namespace XamarinFormsNFC.ViewModels
             }
             catch (System.Exception ex)
             {
-                await ShowAlert(ex.Message);
+                //await ShowAlert(ex.Message);
+                Console.WriteLine($"{ex.Message}");
             }
         }
 
