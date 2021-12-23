@@ -5,8 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="NewFolder1\**" />
     <Compile Remove="NFCFunction\**" />
+    <EmbeddedResource Remove="NewFolder1\**" />
     <EmbeddedResource Remove="NFCFunction\**" />
+    <None Remove="NewFolder1\**" />
     <None Remove="NFCFunction\**" />
   </ItemGroup>
 
