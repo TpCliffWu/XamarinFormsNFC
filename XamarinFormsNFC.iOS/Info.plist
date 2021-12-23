@@ -40,11 +40,11 @@
 	<string>需要NFC權限讀取標籤</string>
 	<key>com.apple.developer.nfc.readersession.iso7816.select-identifiers</key>
 	<array>
-		<string>com.apple.developer.nfc.readersession.iso7816.select-identifiers</string>
+		<string>D2760000850101</string>
 	</array>
 	<key>com.apple.developer.nfc.readersession.felica.systemcodes</key>
 	<array>
-		<string></string>
+		<string>12FC</string>
 	</array>
 </dict>
 </plist>
