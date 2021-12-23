@@ -21,6 +21,7 @@ namespace XamarinFormsNFC.Droid.NFC
         /// </summary>
         public static readonly byte[] A_OKAY = new byte[] { 0x90, 0x00 };
 
+        // 00-11-20-FF-FF-FF-FF-04-06-E1-04-FF-FE-00-FF-90-00
         public static readonly byte[] READ_CAPABILITY_CONTAINER_RESPONSE = new byte[] {
       0x00, 0x11, // CCLEN length of the CC file
       0x20, // Mapping Version 2.0

@@ -140,8 +140,34 @@ namespace XamarinFormsNFC.Droid
             var top2apddu = BitConverter.ToString(commandApdu.Take(2).ToArray());
             if (top2apddu == "00-B0")
             {
+                // 完整訊息
+                var fullResponse = NDEF_URI_LEN.Concat(NDEF_URI_BYTES).ToArray();
+
+                // 切割訊息
+                // 開始序列位置
+                var offsetByte = commandApdu.Skip(2).Take(2).ToArray();
+                Log.Info(TAG, $"#6 offsetByte :{ BitConverter.ToString(offsetByte)}");
+
+                var offsetHex = BitConverter.ToString(offsetByte).Replace("-", "");
+                var offset= Int32.Parse(offsetHex, System.Globalization.NumberStyles.HexNumber);
+
+                // 序列長度
+                var lengthByte = commandApdu.Skip(4).Take(1).ToArray();
+
+                Log.Info(TAG, $"#6 lengthByte :{ BitConverter.ToString(lengthByte)}");
+
+                var lengthHex = BitConverter.ToString(lengthByte).Replace("-", "");
+                var length = Int32.Parse(lengthHex, System.Globalization.NumberStyles.HexNumber);
+
+                // 切割訊息
+                var slicedResponse = fullResponse.Skip(offset).Take(length).ToArray();
+
+                Log.Info(TAG, $"#6 fullResponse { BitConverter.ToString(fullResponse)}");
+                Log.Info(TAG, $"#6 offset :{offset}, length:{length}");
+
                 READ_CAPABILITY_CONTAINER_CHECK = false;
-                var resp = NDEF_URI_BYTES.Concat(APDUResponse.A_OKAY).ToArray();
+                var resp = slicedResponse.Concat(APDUResponse.A_OKAY).ToArray();
+
                 Log.Info(TAG, $"#6 { BitConverter.ToString(resp)}");
                 return resp;
             }
