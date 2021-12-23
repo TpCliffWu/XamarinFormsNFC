@@ -1,11 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<prism:PrismApplication xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:prism="http://prismlibrary.com"
-             x:Class="XamarinFormsNFC.App">
-  <Application.Resources>
+<prism:PrismApplication
+    x:Class="XamarinFormsNFC.App"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:XamarinFormsNFC;assembly=XamarinFormsNFC"
+    xmlns:prism="http://prismlibrary.com">
+    <Application.Resources>
+        <local:NegateBoolConvert x:Key="negateBoolConvert" />
 
-    <!-- Application resource dictionary -->
+        <!--  Application resource dictionary  -->
 
-  </Application.Resources>
+    </Application.Resources>
 </prism:PrismApplication>
