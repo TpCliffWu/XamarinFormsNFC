@@ -73,8 +73,7 @@
     <Compile Include="MainApplication.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="MyHostApduService.cs" />
-    <Compile Include="NFC\APDUCommand.cs" />
-    <Compile Include="NFC\APDUResponse.cs" />
+    <Compile Include="NFC\NfcHelper.cs" />
     <Compile Include="SplashActivity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <LinkDescription Include="LinkerSettings.xml" />

@@ -88,7 +88,7 @@ namespace XamarinFormsNFC.Droid
             if (!(commandApdu?.Length > 0))
             {
                 Log.Info(TAG, "#999");
-                return APDUResponse.UNKNOWN_CMD_SW;
+                return NfcHelper.UNKNOWN_CMD_SW;
             }
 
 
@@ -108,28 +108,28 @@ namespace XamarinFormsNFC.Droid
                 case "00-A4-04-00-07-D2-76-00-00-85-01-01-00":
                     // @xml/apduservice  D2760000850101
                     Log.Info(TAG, $"#1");
-                    return APDUResponse.A_OKAY;
+                    return NfcHelper.A_OKAY;
 
                 case "00-A4-00-0C-02-E1-03":
                     Log.Info(TAG, $"#2");
-                    return APDUResponse.A_OKAY;
+                    return NfcHelper.A_OKAY;
 
                 case "00-B0-00-00-0F":
                     if (!READ_CAPABILITY_CONTAINER_CHECK)
                     {
                         Log.Info(TAG, $"#3");
                         READ_CAPABILITY_CONTAINER_CHECK = true;
-                        return APDUResponse.READ_CAPABILITY_CONTAINER_RESPONSE;
+                        return NfcHelper.READ_CAPABILITY_CONTAINER_RESPONSE;
                     }
                     break;
 
                 case "00-A4-00-0C-02-E1-04":
                     Log.Info(TAG, $"#4");
-                    return APDUResponse.A_OKAY;
+                    return NfcHelper.A_OKAY;
 
                 case "00-B0-00-00-02":
 
-                    var resp = NDEF_URI_LEN.Concat(APDUResponse.A_OKAY).ToArray();
+                    var resp = NDEF_URI_LEN.Concat(NfcHelper.A_OKAY).ToArray();
 
                     Log.Info(TAG, $"#5 : {BitConverter.ToString(resp)}");
 
@@ -166,7 +166,7 @@ namespace XamarinFormsNFC.Droid
                 Log.Info(TAG, $"#6 offset :{offset}, length:{length}");
 
                 READ_CAPABILITY_CONTAINER_CHECK = false;
-                var resp = slicedResponse.Concat(APDUResponse.A_OKAY).ToArray();
+                var resp = slicedResponse.Concat(NfcHelper.A_OKAY).ToArray();
 
                 Log.Info(TAG, $"#6 { BitConverter.ToString(resp)}");
                 return resp;
@@ -175,7 +175,7 @@ namespace XamarinFormsNFC.Droid
             READ_CAPABILITY_CONTAINER_CHECK = false;
 
             Log.Info(TAG, "#999");
-            return APDUResponse.UNKNOWN_CMD_SW;
+            return NfcHelper.UNKNOWN_CMD_SW;
         }
     }
 }

@@ -14,7 +14,7 @@ namespace XamarinFormsNFC.Droid.NFC
     /// <summary>
     /// https://www.eftlab.com/knowledge-base/complete-list-of-apdu-responses/
     /// </summary>
-    public class APDUResponse
+    public class NfcHelper
     {
         /// <summary>
         /// [Info] Command successfully executed (OK).
